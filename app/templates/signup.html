@@ -1,0 +1,29 @@
+{%extends 'base.html'%}
+{%block title%}Sign Up{%endblock%}
+{%block content%}
+<h1 class="mt-5">Sign Up</h1>
+<form>
+  <div class="form-group">
+    <label for="login">Login</label>
+    <input type="text" class="form-control" placeholder="Login" name="login" aria-describedby="addon-wrapping">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" name="password" placeholder="Password">
+  </div>
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" name="name" placeholder="Name">
+  </div>
+  <div class="form-group">
+    <label for="inputGroupSelect01">Role</label>
+    <select class="custom-select" name="role">
+      <option selected>Choose...</option>
+      <option value="1">Admin</option>
+      <option value="2">Specialist</option>
+      <option value="3">User</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Create!</button>
+</form>
+{%endblock%}
