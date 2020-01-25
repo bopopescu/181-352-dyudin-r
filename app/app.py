@@ -1,8 +1,14 @@
 from flask import Flask, render_template, url_for, redirect,request
 import mysql.connector
 import flask_login
-from config import *
-
+# from config import *
+cg = {
+    'user': 'std_879',
+    'password': 'Logati22',
+    'host': 'std-mysql.ist.mospolytech.ru',
+    'database': 'std_879',
+    'raise_on_warnings': True
+}
 
 app = Flask(__name__)
 application = app
@@ -15,7 +21,6 @@ login_manager.session_protection = "strong"
 
 @app.route('/')
 def index():
-  
   return render_template('index.html')
 
 
@@ -24,14 +29,14 @@ def signup():
   cnx = mysql.connector.connect(**cg)
   cursor = cnx.cursor(named_tuple=True)
 
-  username = request.form.get('username')
+  login = request.form.get('login')
   password = request.form.get('password')
   name = request.form.get('name')
   role = request.form.get('role')
-  data = (username, password,name,role)
+  data = (login, password,name,role)
 
-  if username and password:
-    query = '''INSERT INTO `user`(`username`, `password`,`name`,`role`) 
+  if login and password:
+    query = '''INSERT INTO `user`(`login`, `password`,`name`,`role`) 
                VALUES (%s,%s,%s,%s)'''
     cursor.execute(query, data)
     cnx.commit()
@@ -51,3 +56,17 @@ def seepage():
   cursor.close()
   cnx.close()
   return render_template('seepage.html',db=db)
+
+@app.route('/edit')
+def edit():
+  cnx = mysql.connector.connect(**cg)
+  cursor = cnx.cursor(named_tuple=True)
+
+  login = request.form.get('login')
+  password = request.form.get('password')
+  data = (login,password)
+  query = 'select * from `appeal` where login=%s and password=%s'
+  cursor.execute(query,data)
+  user = cursor.fetchall()
+  
+  return render_template('edit.html')

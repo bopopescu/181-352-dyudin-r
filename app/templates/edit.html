@@ -1,0 +1,16 @@
+{%extends 'base.html'%}
+{%block title%}Edit{%endblock%}
+{%block content%}
+<h1 class="mt-5">Edit</h1>
+<form method="POST">
+  <div class="form-group">
+    <label for="login">Login</label>
+    <input type="text" class="form-control" placeholder="Login" name="login" aria-describedby="addon-wrapping">
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" name="password" placeholder="Password">
+  </div>
+  <button type="submit" class="btn btn-primary">EDIT</button>
+</form>
+{%endblock%}
