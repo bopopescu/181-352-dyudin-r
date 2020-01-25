@@ -1,18 +1,17 @@
 from flask import Flask, render_template, url_for, redirect,request
 import mysql.connector
 import flask_login
-# from config import * не работает
+from config import *
 
 
 app = Flask(__name__)
 application = app
-cg = {
-    'user': 'std_879',
-    'password': 'Logati22',
-    'host': 'std-mysql.ist.mospolytech.ru',
-    'database': 'std_879',
-    'raise_on_warnings': True
-}
+
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+login_manager.session_protection = "strong"
+
 
 @app.route('/')
 def index():
@@ -25,10 +24,10 @@ def signup():
   cnx = mysql.connector.connect(**cg)
   cursor = cnx.cursor(named_tuple=True)
 
-  username = request.args.get('username')
-  password = request.args.get('password')
-  name = request.args.get('name')
-  role = request.args.get('role')
+  username = request.form.get('username')
+  password = request.form.get('password')
+  name = request.form.get('name')
+  role = request.form.get('role')
   data = (username, password,name,role)
 
   if username and password:
