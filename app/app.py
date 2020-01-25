@@ -1,15 +1,22 @@
 from flask import Flask, render_template, url_for, redirect,request
 import mysql.connector
 import flask_login
-from config import *
+# from config import * не работает
 
 
 app = Flask(__name__)
 application = app
-
+cg = {
+    'user': 'std_879',
+    'password': 'Logati22',
+    'host': 'std-mysql.ist.mospolytech.ru',
+    'database': 'std_879',
+    'raise_on_warnings': True
+}
 
 @app.route('/')
 def index():
+  
   return render_template('index.html')
 
 
@@ -38,4 +45,10 @@ def signup():
 
 @app.route('/seepage')
 def seepage():
-  return render_template('seepage.html')
+  cnx = mysql.connector.connect(**cg)
+  cursor = cnx.cursor(named_tuple=True)
+  cursor.execute('select * from `appeal`')
+  db = cursor.fetchall()
+  cursor.close()
+  cnx.close()
+  return render_template('seepage.html',db=db)

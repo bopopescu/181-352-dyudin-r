@@ -1,0 +1,30 @@
+{%extends 'base.html'%}
+{%block title%}SeePage{%endblock%}
+{%block content%}
+<h1 class="mt-5">SeePage</h1>
+{%if db%}
+<table class="table">
+  <thead>
+    <tr>
+      <th>date</th>
+      <th>user</th>
+      <th>type</th>
+      <th>status</th>
+      <th>message</th>
+    </tr>
+  </thead>
+  <tbody>
+    {%for item in db%}
+    <tr>
+      <td>{{loop.index}}</td>
+      <td>{{item.date}}</td>
+      <td>{{item.user}}</td>
+      <td>{{item.type}}</td>
+      <td>{{item.status}}</td>
+      <td>{{item.message}}</td>
+    </tr>
+    {%endfor%}
+  </tbody>
+</table>
+{%endif%}
+{%endblock%}
