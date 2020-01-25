@@ -1,14 +1,8 @@
 from flask import Flask, render_template, url_for, redirect,request
 import mysql.connector
 import flask_login
-# from config import *
-cg = {
-    'user': 'std_879',
-    'password': 'Logati22',
-    'host': 'std-mysql.ist.mospolytech.ru',
-    'database': 'std_879',
-    'raise_on_warnings': True
-}
+from config import *
+
 
 app = Flask(__name__)
 application = app
@@ -57,7 +51,8 @@ def seepage():
   cnx.close()
   return render_template('seepage.html',db=db)
 
-@app.route('/edit')
+
+@app.route('/edit',methods=['GET','POST'])
 def edit():
   cnx = mysql.connector.connect(**cg)
   cursor = cnx.cursor(named_tuple=True)
@@ -65,8 +60,12 @@ def edit():
   login = request.form.get('login')
   password = request.form.get('password')
   data = (login,password)
-  query = 'select * from `appeal` where login=%s and password=%s'
+  query = 'select * from `user` where login=%s and password=%s'
   cursor.execute(query,data)
   user = cursor.fetchall()
+
   
+  cursor.execute('select * from `appeal`')
+  massivedb = cursor.fetchall()
+
   return render_template('edit.html')

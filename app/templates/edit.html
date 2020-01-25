@@ -1,7 +1,9 @@
 {%extends 'base.html'%}
 {%block title%}Edit{%endblock%}
 {%block content%}
+{%if not user%}
 <h1 class="mt-5">Edit</h1>
+
 <form method="POST">
   <div class="form-group">
     <label for="login">Login</label>
@@ -13,4 +15,19 @@
   </div>
   <button type="submit" class="btn btn-primary">EDIT</button>
 </form>
+{%endif%}
+{%if user%}
+<div class="card-columns">
+{%for appeal in massivedb%}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{appeal.type}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{appeal.date}}</h6>
+    <p class="card-text">{{appeal.message}}</p>
+    <p class="card-text"><small class="text-muted">{{appeal.status}}</small></p>
+  </div>
+</div>
+{%endfor%}
+</div>
+{%endif%}
 {%endblock%}
